@@ -1,0 +1,66 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+p {
+    max-width: 60%;
+}
+h3 {
+    font-size: 20px;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+.outerleft {
+
+    margin: 0 auto;
+    width:100%;
+    padding-left:300px;
+    padding-right:300px;
+    padding-bottom: 75px;
+}
+
+.innerleft {
+    min-width:325px;
+}
+.innerright {
+    float:left;
+    width:300px;
+    padding-left:50px;
+    margin-left:40px;
+    padding-bottom: 75px;
+}
+
+
+@media (max-width:720px) {
+    p {
+        max-width: 100%;
+    }
+.outerleft {
+    float:left;
+    padding-left:10px;
+}
+.innerright {
+    float:left;
+    margin-left:0;
+    padding-left:10px;
+}
+
+}
