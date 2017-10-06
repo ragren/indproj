@@ -1,0 +1,34 @@
+{% include 'header.html' %}
+<title>Your tests</title>
+
+<div class="shell">
+    <h3 style="text-align: center;">Tests</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Questions</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="tables">
+            {{ test_table| safe }}
+        </tbody>
+    </table>
+    <div class="row">
+        {% if error %}
+        <h3 style="color:red">Test name is too short.</h3>
+        {% endif %}
+        <h3 style="text-align: center;">Create new test</h3>
+        <form class="input" role="form"  method="POST" action="">
+            <div class="form-group">
+                <label for="name">Test name: </label>
+                <input type="text" name="name" class="form-control" required/>
+            </div>
+            <hr>
+            <button type="submit" name="btn" value="create" class="btn btn-default">Create</button>
+        </form>
+    </div>
+</div>
+{% include 'footer.html' %}
