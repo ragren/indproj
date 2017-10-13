@@ -1,0 +1,31 @@
+{% include 'header0.html' %}
+<title>Test</title>
+
+<div class="shell">
+                    {% for n in range( 1, end )  %}
+
+                    {% if progress < n + 1 %}
+                    <div style="height:10px;width:{{ 100/end }}%; background-color:lightgray; float:left; margin: 0 auto"></div>
+                    {% else %}
+                    <div style="height:10px;width:{{ 100/end }}%; background-color:black; float:left; margin: 0 auto"></div>
+                    {% endif %}
+                    {% endfor %}
+    <div class="row">
+        <h5 style="text-align: center;"></h5>
+        <form class="input" role="form"  method="POST" action="">
+            <div class="form-group">
+                <label for="name">{{ text }}</label>
+                {% for item in answers %}
+                <input type="radio" name="answer" value= {{ item.id }}> {{ item.sentence }}<br>
+                {% endfor %}
+                <input style="display:none" type="radio" name="answer" value="wrong" checked="checked" />
+            </div>
+            <hr>
+            <button type="submit" name="btn" value="confirm" class="btn btn-default">Next</button>
+        {% if error %}
+        <h3 style="color:red">Select an answer.</h3>
+        {% endif %}
+        </form>
+    </div>
+</div>
+{% include 'footer.html' %}

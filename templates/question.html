@@ -6,9 +6,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th></th>
+                <th>Edit</th>
                 <th>Questions</th>
-                <th></th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody class="tables">
@@ -20,14 +20,14 @@
         <h3 style="color:red">Question is too short.</h3>
         {% endif %}
         <h3 style="text-align: center;">Create new question</h3>
-        <form class="input" role="form"  method="POST" action="">
+        <form role="form"  method="POST" action="">
             <div class="form-group">
                 <label for="question">Question: </label>
                 <input type="text" name="question" class="form-control" required/>
             </div>
             <hr>
             <button type="submit" name="btn" value="create" class="btn btn-default">Continue</button>
-            <a href="/test" style="float:right" class="btn btn-default">Go back</a>
+            <a href="../test" style="float:right" class="btn btn-default">Go back</a>
         </form>
 
     </div>

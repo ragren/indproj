@@ -3,9 +3,14 @@
 """
 Main Flask file
 """
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+"""
+Main Flask file
+"""
 import time
 import os
-from flask import Flask, redirect, render_template, request, session, url_for, send_from_directory
+from flask import Flask, redirect, render_template, request, session, url_for, send_from_directory, abort
 from handler import Handler
 app = Flask(__name__)
 hand = Handler()
@@ -61,8 +66,68 @@ def test():
             if edit != None:
                 session['testID'] = edit
                 return redirect(url_for('question'))
+            use = request.args.get("use")
+            if use != None:
+                session['testID'] = use
+                return redirect(url_for('link'))
         return render_template("test.html", test_table=hand.table("test"))
     return redirect(url_for('login'))
+
+
+@app.route('/test/link', methods=["POST", "GET"])
+def link():
+    """working with new test"""
+    if 'username' in session:
+        if session.get('testID'):
+            if request.method == "POST":
+                if request.form['btn'] == 'create':
+                    name = request.form['name']
+                    name.strip()
+                    if len(name) > 2:
+                        hand.create(hand.cleanse(name), "link", session['testID'])
+                        return redirect(url_for('link'))
+                    else:
+                        return render_template("link.html", test_name=hand.name("question", session['testID']), link_table=hand.table("link", session['testID']), error=True)
+                if request.form['btn'] == 'return':
+                    return redirect(url_for('test'))
+
+            if request.method == "GET":
+                delete = request.args.get("del")
+                if delete != None:
+                    hand.remove(delete, "link")
+
+            return render_template("link.html", test_name=hand.name("question", session['testID']), link_table=hand.table("link", session['testID']))
+        else:
+            return redirect(url_for('test'))
+    return redirect(url_for('login'))
+
+@app.route('/en/<code>', methods=["POST", "GET"])
+def use(code):
+    """working with new test"""
+    error = False
+    if hand.validate(code):
+        question = hand.getQuestion(code)
+        if question == False:
+            return render_template("done.html")
+        answers = hand.getAnswers(question[3])
+        if request.method == "POST":
+            if request.form['btn'] == 'confirm':
+
+                userAnswer = request.form['answer']
+                if userAnswer == "wrong":
+                    error = True
+                    return render_template("user.html", text=question[0], progress=question[1], end=question[2], answers=answers, error=error)
+                else:
+                    hand.checkAnswer(code, userAnswer)
+                return redirect(url_for('use', code=code))
+
+
+
+        return render_template("user.html", text=question[0], progress=question[1], end=question[2], answers=answers, error=error)
+    else:
+        abort(404)
+
+
 
 @app.route('/test/new', methods=["POST", "GET"])
 def question():
@@ -131,6 +196,7 @@ def answer():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 #app.secret_key = os.urandom(24)
 app.secret_key = "mysecretkey"

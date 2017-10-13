@@ -2,29 +2,28 @@
 <title>Your tests</title>
 
 <div class="shell">
-    <h3 style="text-align: center;">Tests</h3>
+    <h3 style="text-align: center;">Test Instances</h3>
     <table class="table">
         <thead>
             <tr>
-                <th>Use</th>
-                <th>Edit</th>
                 <th>Name</th>
-                <th>Questions</th>
+                <th>Points</th>
+                <th>Link</th>
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody class="tables">
-            {{ test_table| safe }}
+            {{ link_table| safe }}
         </tbody>
     </table>
     <div class="row">
         {% if error %}
-        <h3 style="color:red">Test name is too short.</h3>
+        <h3 style="color:red">Canidate name is too short.</h3>
         {% endif %}
-        <h3 style="text-align: center;">Create new test</h3>
+        <h3 style="text-align: center;">Create new test instance </h3>
         <form role="form"  method="POST" action="">
             <div class="form-group">
-                <label for="name">Test name: </label>
+                <label for="name">Name of canidate: </label>
                 <input type="text" name="name" class="form-control" required/>
             </div>
             <hr>
