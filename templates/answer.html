@@ -1,37 +1,26 @@
 {% include 'header.html' %}
-<title>Your tests</title>
+<title>Manage Answers</title>
 
 <div class="shell">
-    <h3 style="text-align: center;">{{ question_name|safe }}</h3>
+    <h3 style="text-align: center;">{{ question_name }}</h3>
     <table class="table">
-        <thead>
-            <tr>
-                <th>Answers</th>
-                <th>Correct?</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody class="tables">
-            {{ answer_table|safe }}
-        </tbody>
+        <th>Answers</th>
+        <th>Correct?</th>
+        <th>Delete</th>
+        {{ answer_table|safe }}
     </table>
-    <div class="row">
+    <h3 style="text-align: center;">Create new Answer</h3>
+    <form role="form"  method="POST" action="">
+        <label for="answer">Answer: </label>
+        <input style="margin-bottom:0.5em" type="text" name="answer" class="form-control" required/>
+        <label for="check">Correct?: </label>
+        <input style="width:20px;" type="checkbox" name="check" class="form-control" />
+        <hr>
+        <button type="submit" name="btn" value="create" class="btn btn-default">Continue</button>
+        <a href="../../test/new" style="float:right" class="btn btn-default">Go back</a>
         {% if error %}
         <h3 style="color:red">Answer is too short.</h3>
         {% endif %}
-        <h3 style="text-align: center;">Create new Answer</h3>
-        <form role="form"  method="POST" action="">
-            <div class="form-group">
-                <label for="answer">Answer: </label>
-                <input style="margin-bottom:0.5em" type="text" name="answer" class="form-control" required/>
-                <label for="check">Correct?: </label>
-                <input style="width:20px;" type="checkbox" name="check" class="form-control" />
-            </div>
-            <hr>
-            <button type="submit" name="btn" value="create" class="btn btn-default">Continue</button>
-            <a href="../../test/new" style="float:right" class="btn btn-default">Go back</a>
-        </form>
-
-    </div>
+    </form>
 </div>
 {% include 'footer.html' %}

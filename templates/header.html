@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
 </head>
 
-
 <div class="navbar">
     <a {%- if request.path == "/" %} class="active" {% endif %} href="{{ url_for("main") }}"><h4>Home</h4></a>
     <a {%- if request.path == "/test" %} class="active" {% endif %} href="{{ url_for("test") }}"><h4><span class="glyphicon glyphicon-th-list"></span> Test</h4></a>

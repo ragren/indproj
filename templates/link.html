@@ -1,35 +1,25 @@
 {% include 'header.html' %}
-<title>Your tests</title>
+<title>Manage links</title>
 
 <div class="shell">
     <h3 style="text-align: center;">Test Instances</h3>
     <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Points</th>
-                <th>Link</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody class="tables">
-            {{ link_table| safe }}
-        </tbody>
+        <th>Name</th>
+        <th>Points</th>
+        <th>Link</th>
+        <th>Delete</th>
+        {{ link_table| safe }}
     </table>
-    <div class="row">
+    <h3 style="text-align: center;">Create new test instance </h3>
+    <form role="form"  method="POST" action="">
+        <label for="name">Name of canidate: </label>
+        <input type="text" name="name" class="form-control" required/>
+        <hr>
+        <button type="submit" name="btn" value="create" class="btn btn-default">Create</button>
+        <a href="../../test" style="float:right" class="btn btn-default">Go back</a>
         {% if error %}
         <h3 style="color:red">Canidate name is too short.</h3>
         {% endif %}
-        <h3 style="text-align: center;">Create new test instance </h3>
-        <form role="form"  method="POST" action="">
-            <div class="form-group">
-                <label for="name">Name of canidate: </label>
-                <input type="text" name="name" class="form-control" required/>
-            </div>
-            <hr>
-            <button type="submit" name="btn" value="create" class="btn btn-default">Create</button>
-            <a href="../../test" style="float:right" class="btn btn-default">Go back</a>
-        </form>
-    </div>
+    </form>
 </div>
 {% include 'footer.html' %}

@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """main handler file"""
-from test import Test
-from question import Question
-from answer import Answer
-from link import Link
-import re
-import string
-import random
+from pythonclass import Test, Question, Answer, Link
+import re, string, random
 from flask import request
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 engine = create_engine("sqlite:///db/database.sqlite")
 Session = sessionmaker(bind=engine)
@@ -21,7 +16,6 @@ class Handler():
         nstr = re.sub(r'[|$|;|>|<|]',r' ',mytext)
         return nstr
 
-
     def getQuestion(self, code):
         myLink = session.query(Link).filter(Link.code == code).first()
         myTest = session.query(Test).filter(Test.id == myLink.testID).first()
@@ -31,12 +25,13 @@ class Handler():
             question = myQuestions[progress]
         else:
             return False
-
         end = myTest.questions
         return [question.text, progress + 1, end, question.id]
+
     def getAnswers(self, questionID):
         myAnswers = session.query(Answer).filter(Answer.questionID == questionID).all()
         return myAnswers
+
     def checkAnswer(self, code, userAnswer):
         myLink = session.query(Link).filter(Link.code == code).first()
         myAnswer = session.query(Answer).filter(Answer.id == userAnswer).first()
@@ -76,7 +71,6 @@ class Handler():
                 progress=0,
                 code=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(4))
                 )
-
         session.add(new)
         session.commit()
 
@@ -92,7 +86,6 @@ class Handler():
         for ID in all_ID:
             if ID.id > highest:
                 highest = ID.id
-
         return highest
 
     def name(self, version, testID):
@@ -103,9 +96,6 @@ class Handler():
         if version == "answer":
             name = session.query(Question).filter(Question.id == testID).first()
             return name.text
-
-
-
 
     def remove(self, remove, version):
         """removes mission"""
@@ -121,7 +111,6 @@ class Handler():
             question = question.testID
             test = session.query(Test).filter(Test.id == question).first()
             test.questions = test.questions - 1
-
             session.query(Question).filter(Question.id == remove).delete()
             session.query(Answer).filter(Answer.questionID == remove).delete()
         if version == "answer":
@@ -150,7 +139,6 @@ class Handler():
                                         <td><a class="btn btn-default glyphicon glyphicon-ok" href='?use={id}'></a><td><a class="btn btn-default glyphicon glyphicon-pencil" href='?edit={id}'></a></td><td class="main">{name}</td><td>{questions}</td>
                                         <td><a class="btn btn-default glyphicon glyphicon-remove" href='?del={id}'></a></td>
                                         </tr>""".format(id=single.id, name=single.name, questions=single.questions)
-
         if version == "link":
             group = session.query(Link).filter(Link.testID == testID).all()
             value = session.query(Test).filter(Test.id == testID).first()
@@ -161,7 +149,6 @@ class Handler():
                                         <td class="main">{name}</td><td>{points}/{total}</td><td><a href={link}>{link}</a></td>
                                         <td><a class="btn btn-default glyphicon glyphicon-remove" href='?del={id}'></a></td>
                                         </tr>""".format(id=single.id, name=single.name, points=single.points, total=value.questions, link=request.url_root + "en/" + single.code)
-
         if version == "question":
             group = session.query(Question).filter(Question.testID == testID).all()
             for single in group:
@@ -171,7 +158,6 @@ class Handler():
                                         <td><a class="btn btn-default glyphicon glyphicon-pencil" href='?edit={id}'></a></td><td class="main">{text}</td>
                                         <td><a class="btn btn-default glyphicon glyphicon-remove" href='?del={id}'></a></td>
                                         </tr>""".format(id=single.id, text=single.text)
-
         if version == "answer":
             group = session.query(Answer).filter(Answer.questionID == testID).all()
             for single in group:
@@ -181,5 +167,4 @@ class Handler():
                             <td class="main">{text}</td><td><input id="checkBox" type="checkbox" disabled="disabled" {correct}></td>
                                         <td><a class="btn btn-default glyphicon glyphicon-remove" href='?del={id}'></a></td>
                                         </tr>""".format(id=single.id, text=single.sentence, correct=single.correct)
-
         return table

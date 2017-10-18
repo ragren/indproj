@@ -1,35 +1,25 @@
 {% include 'header.html' %}
-<title>Your tests</title>
+<title>Manage Tests</title>
 
 <div class="shell">
     <h3 style="text-align: center;">Tests</h3>
     <table class="table">
-        <thead>
-            <tr>
-                <th>Use</th>
-                <th>Edit</th>
-                <th>Name</th>
-                <th>Questions</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody class="tables">
-            {{ test_table| safe }}
-        </tbody>
+        <th>Use</th>
+        <th>Edit</th>
+        <th>Name</th>
+        <th>Questions</th>
+        <th>Delete</th>
+        {{ test_table| safe }}
     </table>
-    <div class="row">
+    <h3 style="text-align: center;">Create new test</h3>
+    <form role="form"  method="POST" action="">
+        <label for="name">Test name: </label>
+        <input type="text" name="name" class="form-control" required/>
+        <hr>
+        <button type="submit" name="btn" value="create" class="btn btn-default">Create</button>
         {% if error %}
         <h3 style="color:red">Test name is too short.</h3>
         {% endif %}
-        <h3 style="text-align: center;">Create new test</h3>
-        <form role="form"  method="POST" action="">
-            <div class="form-group">
-                <label for="name">Test name: </label>
-                <input type="text" name="name" class="form-control" required/>
-            </div>
-            <hr>
-            <button type="submit" name="btn" value="create" class="btn btn-default">Create</button>
-        </form>
-    </div>
+    </form>
 </div>
 {% include 'footer.html' %}

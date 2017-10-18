@@ -1,35 +1,24 @@
 {% include 'header.html' %}
-<title>Your tests</title>
+<title>Manage Questions</title>
 
 <div class="shell">
-    <h3 style="text-align: center;">{{ test_name|safe }}</h3>
+    <h3 style="text-align: center;">{{ test_name }}</h3>
     <table class="table">
-        <thead>
-            <tr>
-                <th>Edit</th>
-                <th>Questions</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody class="tables">
-            {{ question_table|safe }}
-        </tbody>
+        <th>Edit</th>
+        <th>Questions</th>
+        <th>Delete</th>
+        {{ question_table|safe }}
     </table>
-    <div class="row">
+    <h3 style="text-align: center;">Create new question</h3>
+    <form role="form"  method="POST" action="">
+        <label for="question">Question: </label>
+        <input type="text" name="question" class="form-control" required/>
+        <hr>
+        <button type="submit" name="btn" value="create" class="btn btn-default">Continue</button>
+        <a href="../test" style="float:right" class="btn btn-default">Go back</a>
         {% if error %}
         <h3 style="color:red">Question is too short.</h3>
         {% endif %}
-        <h3 style="text-align: center;">Create new question</h3>
-        <form role="form"  method="POST" action="">
-            <div class="form-group">
-                <label for="question">Question: </label>
-                <input type="text" name="question" class="form-control" required/>
-            </div>
-            <hr>
-            <button type="submit" name="btn" value="create" class="btn btn-default">Continue</button>
-            <a href="../test" style="float:right" class="btn btn-default">Go back</a>
-        </form>
-
-    </div>
+    </form>
 </div>
 {% include 'footer.html' %}
